@@ -1,0 +1,25 @@
+services:
+  php:
+    build:
+      context: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: student_deadline_tracker
+      MYSQL_USER: wapuser
+      MYSQL_PASSWORD: wappass
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
